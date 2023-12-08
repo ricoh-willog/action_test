@@ -1,0 +1,43 @@
+name: Comment Command
+
+on:
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  detect_command:
+    runs-on: self-hosted
+    outputs:
+      triggered: ${{ steps.check.outputs.triggered }}
+      comment: ${{ steps.check.outputs.comment_body }}
+    steps:
+      - id: check
+        uses: khan/pull-request-comment-trigger@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            trigger: "$"
+
+  run_command:
+    runs-on: self-hosted
+    needs: detect_command
+    permission:
+      pull-requests: write
+    if: ${{ needs.detect_command.outputs.triggered == 'true' }}
+    steps:
+      - id: parse
+        run: |
+          {
+            comment="${{ needs.detect_command.outputs.comment }}"
+            message="${comment#\$}"
+
+            echo "Command parsed: $message"
+
+            echo "message=$message" >> "$GITHUB_OUTPUT"
+          }
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: msg -> ${{ steps.parse.outputs.message }}
+          repo-token: ${{ secrets.BOT_PAT }}
