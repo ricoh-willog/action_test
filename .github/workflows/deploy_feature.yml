@@ -4,19 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target to deploy'
+        description: 'Target to deploy (target scheme)'
         required: true
         type: string
       version:
-        description: 'Version to deploy'
+        description: 'Version to deploy (major.minor.patch)'
         required: true
         type: string
       build:
-        description: 'Build to deploy'
+        description: 'Build to deploy (number)'
         required: true
         type: number
-      tags:
-        description: 'Test scenario tag'
+      tag:
+        description: 'Test scenario tag (feature name)'
         required: true
         type: string
 
@@ -28,4 +28,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Build & Deploy
         run: |
-          fastlane feature target:${{ inputs.target }} version:${{ inputs.version }} build:${{ inputs.build }} tags:${{ inputs.tags }}
+          fastlane feature target:${{ inputs.target }} version:${{ inputs.version }} build:${{ inputs.build }} tag:${{ inputs.tag }}
