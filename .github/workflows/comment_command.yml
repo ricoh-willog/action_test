@@ -31,7 +31,7 @@ jobs:
         run: |
           {
             comment="${{ needs.detect_command.outputs.comment }}"
-            message="${comment#\$}"
+            message=`echo ${comment#\$} | sed -e 's/^[[:space:]]*//'`
 
             echo "Command parsed: $message"
 
