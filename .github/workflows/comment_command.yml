@@ -23,7 +23,7 @@ jobs:
   run_command:
     runs-on: self-hosted
     needs: detect_command
-    permission:
+    permissions:
       pull-requests: write
     if: ${{ needs.detect_command.outputs.triggered == 'true' }}
     steps:
