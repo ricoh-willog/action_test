@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target environment'
+        description: 'Target to deploy'
         required: true
         type: string
       version:
