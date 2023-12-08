@@ -14,7 +14,6 @@ on:
       build:
         description: 'Build to deploy'
         required: true
-        default: 'latest'
         type: number
       tags:
         description: 'Test scenario tag'
