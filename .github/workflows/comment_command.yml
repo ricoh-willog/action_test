@@ -69,5 +69,5 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1.2.2
         with: 
           workflow: ${{ steps.run.outputs.workflow }}
-          ref: ${{ github.head_ref }}
-          inputs: '${{ steps.run.outputs.inputs }}'
+          ref: refs/pull/${{ github.event.issue.number }}/head
+          inputs: ${{ steps.run.outputs.inputs }}
