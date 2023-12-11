@@ -51,9 +51,19 @@ jobs:
             command=${{ steps.parse.outputs.command }}
             arguments=($(tr " " "\n" <<< "${{ steps.parse.outputs.arguments }}"))
             
-            echo $command
-            echo ${arguments[0]}
-            echo ${arguments[1]}
-            echo ${arguments[2]}
-            echo ${arguments[3]}
+            case $command in
+            deploy_feature)
+              echo "workflow=deploy_feature" >> "$GITHUB_OUTPUT"
+              echo "inputs={\"target\": \"${arguments[0]}\", \"version\": \"${arguments[1]}\", \"build\": \"${arguments[2]}\", \"tag\": \"${arguments[3]}\"}" >> "$GITHUB_OUTPUT"
+              ;;
+            deploy)
+            echo "workflow=deploy" >> "$GITHUB_OUTPUT"
+            echo "inputs={\"type\": \"${arguments[0]}\", \"target\": \"${arguments[1]}\", \"version\": \"${arguments[2]}\", \"build\": \"${arguments[3]}\"}" >> "$GITHUB_OUTPUT"
+              ;;
+            esac
           }
+      - id: trigger_workflow
+        uses: benc-uk/workflow-dispatch@v1.2.2
+        with: 
+          workflow: ${{ steps.run.outputs.workflow }}
+          inputs: ${{ steps.run.outputs.inputs }}
