@@ -48,7 +48,7 @@ jobs:
       - id: run
         run: |
           {
-            echo ${{ github }}
+            echo ${{ github.sha }}
             echo ${{ github.ref }}
             echo ${{ github.event.pull_request.head.ref }}
             command=${{ steps.parse.outputs.command }}
