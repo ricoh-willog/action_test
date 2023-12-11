@@ -18,7 +18,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          trigger: "$"
+          trigger: "@willog-bot"
 
   run_command:
     runs-on: self-hosted
@@ -32,13 +32,13 @@ jobs:
           {
             comment="${{ needs.detect_command.outputs.comment }}"
             message=`echo ${comment#\$} | sed -e 's/^[[:space:]]*//'`
-
+            
             echo "Command parsed: $message"
 
             tokens=($(tr " " "\n" <<< $message))
-
-            command=${tokens[0]}
-            arguments=($(tr "/" " " <<< ${tokens[1]}))
+            
+            command=${tokens[1]}
+            arguments=($(tr "/" " " <<< ${tokens[2]}))
 
             echo "command=$command" >> "$GITHUB_OUTPUT"
             echo "arguments=$arguments" >> "$GITHUB_OUTPUT"
