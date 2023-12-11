@@ -35,9 +35,17 @@ jobs:
 
             echo "Command parsed: $message"
 
-            echo "message=$message" >> "$GITHUB_OUTPUT"
+            tokens=($(tr " " "\n" <<< $message))
+
+            command=${tokens[0]}
+            arguments=($(tr "/" " " <<< ${tokens[1]}))
+
+            echo "command=$command" >> "$GITHUB_OUTPUT"
+            echo "arguments=$arguments" >> "$GITHUB_OUTPUT"
           }
-      - uses: mshick/add-pr-comment@v2
-        with:
-          message: msg -> ${{ steps.parse.outputs.message }}
-          repo-token: ${{ secrets.BOT_PAT }}
+      - id: run
+        run: |
+          {
+            echo ${{ steps.parse.outputs.command }}
+            echo ${{ steps.parse.outputs.arguments }}
+          }
