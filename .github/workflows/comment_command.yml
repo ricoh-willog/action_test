@@ -30,6 +30,8 @@ jobs:
       - id: parse
         run: |
           {
+            # Message format
+            # @willog-bot <command> <arguments... divided by '/'>
             comment="${{ needs.detect_command.outputs.comment }}"
             message=`echo ${comment#\$} | sed -e 's/^[[:space:]]*//'`
             
@@ -38,7 +40,7 @@ jobs:
             tokens=($(tr " " "\n" <<< $message))
             
             command=${tokens[1]}
-            arguments=($(tr "/" " " <<< ${tokens[2]}))
+            arguments=$(tr "/" " " <<< ${tokens[2]})
 
             echo "command=$command" >> "$GITHUB_OUTPUT"
             echo "arguments=$arguments" >> "$GITHUB_OUTPUT"
@@ -46,9 +48,12 @@ jobs:
       - id: run
         run: |
           {
-            echo ${{ steps.parse.outputs.command }}
-            echo ${{ steps.parse.outputs.arguments[0] }}
-            echo ${{ steps.parse.outputs.arguments[1] }}
-            echo ${{ steps.parse.outputs.arguments[2] }}
-            echo ${{ steps.parse.outputs.arguments[3] }}
+            command=${{ steps.parse.outputs.command }}
+            arguments=($(tr " " "\n" <<< ${{ steps.parse.outputs.arguments }}))
+            
+            echo $command
+            echo ${arguments[0]}
+            echo ${arguments[1]}
+            echo ${arguments[2]}
+            echo ${arguments[3]}
           }
