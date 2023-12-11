@@ -27,10 +27,8 @@ jobs:
       actions: write
     if: ${{ needs.detect_command.outputs.triggered == 'true' }}
     steps:
-      - id: refs
-        uses: eficode/resolve-pr-refs@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - id: comment-branch
+        uses: xt0rted/pull-request-comment-branch@v2  
       - id: parse
         run: |
           {
@@ -70,5 +68,5 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1.2.2
         with: 
           workflow: ${{ steps.run.outputs.workflow }}
-          ref: ${{ steps.refs.outputs.head_ref }}
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
           inputs: ${{ steps.run.outputs.inputs }}
