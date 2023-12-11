@@ -50,6 +50,7 @@ jobs:
           {
             echo ${{ github.head_ref }}
             echo ${{ github.ref }}
+            echo ${{ github.event.pull_request.head.ref }}
             command=${{ steps.parse.outputs.command }}
             arguments=($(tr " " "\n" <<< "${{ steps.parse.outputs.arguments }}"))
             
