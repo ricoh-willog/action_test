@@ -53,7 +53,7 @@ jobs:
             
             case $command in
             deploy_feature)
-              echo "workflow=deploy_feature.yaml" >> "$GITHUB_OUTPUT"
+              echo "workflow=deploy_feature.yml" >> "$GITHUB_OUTPUT"
               echo "inputs={\"target\": \"${arguments[0]}\", \"version\": \"${arguments[1]}\", \"build\": \"${arguments[2]}\", \"tag\": \"${arguments[3]}\"}" >> "$GITHUB_OUTPUT"
               ;;
             deploy)
