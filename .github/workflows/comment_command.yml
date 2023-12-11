@@ -49,7 +49,7 @@ jobs:
         run: |
           {
             command=${{ steps.parse.outputs.command }}
-            arguments=($(tr " " "\n" <<< ${{ steps.parse.outputs.arguments }}))
+            arguments=($(tr " " "\n" <<< "${{ steps.parse.outputs.arguments }}"))
             
             echo $command
             echo ${arguments[0]}
