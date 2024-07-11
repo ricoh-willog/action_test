@@ -67,6 +67,7 @@ jobs:
               ;;
             build_check)
             echo "workflow=build_test.yml" >> "$GITHUB_OUTPUT"
+            echo "inputs={}" >> "$GITHUB_OUTPUT"
               ;;
             esac
           }
