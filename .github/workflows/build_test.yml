@@ -3,7 +3,7 @@ name: Build Test
 on: workflow_dispatch
 
 jobs:
-  deploy:
+  check:
     runs-on: self-hosted
     steps:
       - name: Checkout
